@@ -30,7 +30,9 @@ try {
   if (process.platform.startsWith("darwin")) {
     console.log("Downloading Adobe AIR SDK & Compiler from: " + archiveUrl);
 
-    child_process.execSync("wget " + archiveUrl, { stdio: "inherit" });
+    child_process.execSync("wget --no-verbose " + archiveUrl, {
+      stdio: "inherit",
+    });
     fs.mkdirSync(installLocation);
     child_process.execSync("tar -C " + installLocation + " -xjf " + filename, {
       stdio: "inherit",
