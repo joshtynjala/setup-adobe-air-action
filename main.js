@@ -9,7 +9,7 @@ try {
     throw new Error("Adobe AIR setup is not supported on Linux");
   }
   var airVersion = core.getInput("air-version");
-  if (airVersion == null) {
+  if (!airVersion) {
     airVersion = "latest";
   }
   console.log("airVersion: " + airVersion);
