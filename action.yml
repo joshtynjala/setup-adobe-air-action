@@ -1,0 +1,7 @@
+name: Install Adobe AIR
+author: Josh Tynjala
+description: Github Action to setup Adobe AIR
+
+runs:
+  using: "node12"
+  main: "main.js"
