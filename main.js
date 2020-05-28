@@ -16,20 +16,13 @@ try {
     ? "c:\\AIR_SDK"
     : "/usr/local/bin/air_sdk";
 
-  var filename = "AIRSDK_Compiler";
-  if (platform == "osx") {
-    filename += ".tbz2";
-  } else if (platform == "win64") {
-    filename += ".zip";
-  }
-
   var archiveUrl =
     "https://airdownload.adobe.com/air/win/download/" +
     airVersion +
-    "/" +
-    filename;
+    "/AIRSDK_Compiler";
 
   if (process.platform.startsWith("darwin")) {
+    archiveUrl += ".tbz2";
     console.log("Downloading Adobe AIR SDK & Compiler from: " + archiveUrl);
 
     child_process.execSync("wget " + archiveUrl, { stdio: "inherit" });
@@ -41,6 +34,7 @@ try {
       stdio: "inherit",
     });
   } else if (process.platform.startsWith("win")) {
+    archiveUrl += ".zip";
     child_process.execSync(
       "powershell " +
         __dirname +
