@@ -8,8 +8,10 @@ try {
   if (process.platform.startsWith("linux")) {
     throw new Error("Adobe AIR setup is not supported on Linux");
   }
-
-  var airVersion = "latest";
+  var airVersion = core.getInput("air-version");
+  if (airVersion == null) {
+    airVersion = "latest";
+  }
   console.log("airVersion: " + airVersion);
 
   var installLocation = process.platform.startsWith("win")

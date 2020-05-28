@@ -2,6 +2,11 @@ name: Install Adobe AIR
 author: Josh Tynjala
 description: Github Action to setup Adobe AIR
 
+inputs:
+  air-version:
+    description: "Which version of the Adobe AIR SDK (example: 32.0)"
+    required: false
+
 runs:
   using: "node12"
   main: "main.js"
