@@ -5,29 +5,32 @@ const path = require("path");
 const child_process = require("child_process");
 
 try {
-  if (process.platform.startsWith("linux")) {
-    throw new Error("Adobe AIR setup is not supported on Linux");
-  }
   var airVersion = core.getInput("air-version");
   if (!airVersion) {
     airVersion = "latest";
+  } else if (!/^\d{1,2}\.\d$/.test(airVersion)) {
+    throw new Error("Invalid Adobe AIR version: " + airVersion);
   }
-  console.log("airVersion: " + airVersion);
+  console.log("Adobe AIR version: " + airVersion);
 
   var installLocation = process.platform.startsWith("win")
     ? "c:\\AIR_SDK"
     : "/usr/local/bin/air_sdk";
 
-  var platform = null;
+  var airPlatform = null;
   var filename = "AIRSDK_Compiler";
   if (process.platform.startsWith("darwin")) {
-    platform = "mac";
+    airPlatform = "mac";
     filename += ".tbz2";
-  } else {
-    platform = "win";
+  } else if (process.platform.startsWith("win")) {
+    airPlatform = "win";
     filename += ".zip";
+  } else {
+    throw new Error("Adobe AIR setup is not supported on Linux");
   }
-  var archiveUrl = `https://airdownload.adobe.com/air/${platform}/download/${airVersion}/${filename}`;
+  console.log("Adobe AIR platform: " + airPlatform);
+
+  var archiveUrl = `https://airdownload.adobe.com/air/${airPlatform}/download/${airVersion}/${filename}`;
 
   if (process.platform.startsWith("darwin")) {
     console.log("Downloading Adobe AIR SDK & Compiler from: " + archiveUrl);
