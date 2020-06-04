@@ -8,7 +8,7 @@ The version of the [Adobe AIR SDK provided by HARMAN](https://airsdk.harman.com/
 
 ### `air-version`
 
-_(Optional)_ Specifies the Adobe AIR SDK version. This value must include both the major and minor parts, such as `32.0`.
+_(Optional)_ Version of the Adobe AIR SDK. This value must include both the major and minor parts, such as `32.0`.
 
 ## Example usage
 

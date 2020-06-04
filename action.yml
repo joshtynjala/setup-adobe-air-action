@@ -1,10 +1,10 @@
-name: Install Adobe AIR
+name: Setup Adobe AIR SDK
 author: Josh Tynjala
-description: Github Action to setup Adobe AIR
+description: Action to setup Adobe AIR SDK
 
 inputs:
   air-version:
-    description: "Which version of the Adobe AIR SDK (example: 32.0)"
+    description: "Version of the Adobe AIR SDK (example: 32.0)"
     required: false
 
 runs:

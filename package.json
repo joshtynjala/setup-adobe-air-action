@@ -1,13 +1,22 @@
 {
-  "name": "adobe-air",
+  "name": "setup-adobe-air",
   "version": "1.0.0",
-  "description": "Github Action to setup Adobe AIR",
+  "private": true,
+  "description": "setup Adobe AIR SDK action",
   "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshtynjala/setup-adobe-air-action.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Josh Tynjala",
+    "url": "https://feathersui.com/"
+  },
+  "keywords": [
+    "actions",
+    "Adobe AIR",
+    "setup"
+  ],
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
