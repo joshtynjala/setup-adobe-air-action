@@ -44,7 +44,7 @@ async function setupAdobeAIR() {
     if (process.platform.startsWith("darwin")) {
       if (path.extname(filename) === ".dmg") {
         child_process.execSync("hdiutil attach " + filename);
-        child_process.execSync("cp -r /Volumes/AIR\\ SDK " + installLocation);
+        child_process.execSync("cp -r /Volumes/AIR\\ SDK/* " + installLocation);
       } else {
         await toolCache.extractTar(downloadedPath, installLocation, "xj");
       }
