@@ -1,5 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const toolCache = require("@actions/tool-cache");
 const fs = require("fs");
 const path = require("path");
 const child_process = require("child_process");
@@ -32,39 +33,13 @@ try {
 
   var archiveUrl = `https://airdownload.adobe.com/air/${airPlatform}/download/${airVersion}/${filename}`;
 
-  if (process.platform.startsWith("darwin")) {
-    console.log("Downloading Adobe AIR SDK & Compiler from: " + archiveUrl);
+  var downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
+  fs.mkdirSync(installLocation);
 
-    child_process.execSync("wget --no-verbose " + archiveUrl, {
-      stdio: "inherit",
-    });
-    fs.mkdirSync(installLocation);
-    child_process.execSync("tar -C " + installLocation + " -xjf " + filename, {
-      stdio: "inherit",
-    });
-    child_process.execSync("chmod 777 " + installLocation, {
-      stdio: "inherit",
-    });
+  if (process.platform.startsWith("darwin")) {
+    await toolCache.extractTar(downloadedPath, installLocation, "xjf");
   } else if (process.platform.startsWith("win")) {
-    child_process.execSync(
-      "powershell " +
-        __dirname +
-        "/download-file-windows.ps1 -url " +
-        archiveUrl +
-        " -output " +
-        filename,
-      { stdio: "inherit" }
-    );
-    fs.mkdirSync(installLocation);
-    child_process.execSync(
-      "powershell " +
-        __dirname +
-        "/unzip-file-windows.ps1 -file " +
-        filename +
-        " -output " +
-        installLocation,
-      { stdio: "inherit" }
-    );
+    await toolCache.extractZip(downloadedPath, installLocation);
   }
 
   core.addPath(path.resolve(installLocation, "bin"));
