@@ -13,7 +13,7 @@ _(Optional)_ Version of the Adobe AIR SDK. This value must include both the majo
 ## Example usage
 
 ```yml
-uses: joshtynjala/setup-adobe-air-action@master
+uses: joshtynjala/setup-adobe-air-action@v1
 with:
   air-version: "32.0"
 ```
