@@ -6,12 +6,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+      - name: Check executables
+        run: |
+          mxmlc -version
+          compc -version
+          adt -version
 
   macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+      - name: Check executables
+        run: |
+          mxmlc -version
+          compc -version
+          adt -version
 
   air-version:
     runs-on: macos-latest
@@ -20,3 +30,8 @@ jobs:
       - uses: ./
         with:
           air-version: "32.0"
+      - name: Check executables
+        run: |
+          mxmlc -version
+          compc -version
+          adt -version
