@@ -1,0 +1,22 @@
+on: [push]
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+
+  air-version:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          air-version: 32.0
