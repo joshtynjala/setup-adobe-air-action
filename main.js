@@ -37,7 +37,7 @@ async function setupAdobeAIR() {
     fs.mkdirSync(installLocation);
 
     if (process.platform.startsWith("darwin")) {
-      await toolCache.extractTar(downloadedPath, installLocation, "xjf");
+      await toolCache.extractTar(downloadedPath, installLocation, "-xjf");
     } else if (process.platform.startsWith("win")) {
       await toolCache.extractZip(downloadedPath, installLocation);
     }
