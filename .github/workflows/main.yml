@@ -8,9 +8,9 @@ jobs:
       - uses: ./
       - name: Check executables
         run: |
-          mxmlc -version
-          compc -version
-          adt -version
+          Get-Command mxmlc
+          Get-Command compc
+          Get-Command adt
 
   macos:
     runs-on: macos-latest
@@ -19,9 +19,9 @@ jobs:
       - uses: ./
       - name: Check executables
         run: |
-          mxmlc -version
-          compc -version
-          adt -version
+          which mxmlc
+          which compc
+          which adt
 
   air-version:
     runs-on: macos-latest
@@ -32,6 +32,6 @@ jobs:
           air-version: "32.0"
       - name: Check executables
         run: |
-          mxmlc -version
-          compc -version
-          adt -version
+          which mxmlc
+          which compc
+          which adt
