@@ -8,7 +8,7 @@ async function setupAdobeAIR() {
   try {
     var airVersion = core.getInput("air-version");
     if (!airVersion) {
-      airVersion = "latest";
+      airVersion = "32.0";
     } else if (!/^\d{1,2}\.\d$/.test(airVersion)) {
       throw new Error("Invalid Adobe AIR version: " + airVersion);
     }
