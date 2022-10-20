@@ -123,9 +123,13 @@ function getInstallLocation() {
     : "/usr/local/bin/air_sdk";
 }
 
-async function installSdkFromUrl(archiveUrl, filename, installLocation) {
+async function installSdkFromUrl(
+  /** @type string */ archiveUrl,
+  /** @type string */ filename,
+  /** @type string */ installLocation
+) {
   const downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
-  fs.mkdirSync(installLocation);
+  fs.mkdirSync(installLocation, { recursive: true });
 
   switch (path.extname(filename)) {
     case ".dmg":
@@ -136,6 +140,8 @@ async function installSdkFromUrl(archiveUrl, filename, installLocation) {
       console.warn(archiveUrl);
       console.warn(downloadedPath);
       console.warn(filename);
+      console.warn(installLocation);
+      console.error(fs.existsSync(downloadedPath), fs.existsSync(filename));
       await toolCache.extractZip(downloadedPath, installLocation);
       break;
     default:
