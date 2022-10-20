@@ -133,6 +133,9 @@ async function installSdkFromUrl(archiveUrl, filename, installLocation) {
       child_process.execSync(`cp -r /Volumes/AIR\\ SDK/* ${installLocation}`);
       break;
     case ".zip":
+      console.warn(archiveUrl);
+      console.warn(downloadedPath);
+      console.warn(filename);
       await toolCache.extractZip(downloadedPath, installLocation);
       break;
     default:
