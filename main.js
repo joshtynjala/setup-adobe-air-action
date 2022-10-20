@@ -27,18 +27,20 @@ async function setupHarmanAIR() {
     }
     let airVersion = core.getInput("air-version");
     if (!airVersion) {
-      const latest = await fetch(
+      const latestResponse = await fetch(
         "https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases/latest"
-      ).json();
+      );
+      const latest = await latestResponse.json();
       airVersion = latest.name;
     } else {
-      const releases = await fetch(
+      const releasesResponse = await fetch(
         "https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases"
-      ).json().releases;
+      );
+      const releases = await releasesResponse.json();
 
       let bestMatch = null;
       const requestedParts = airVersion.split(".");
-      for (let release of releases) {
+      for (let release of releases.releases) {
         const releaseName = release.name;
         const releaseParts = releaseName.split(".");
         let matched = true;
@@ -63,9 +65,11 @@ async function setupHarmanAIR() {
     }
     console.log("Adobe AIR SDK (HARMAN) version: " + airVersion);
 
-    const urls = await fetch(
+    const urlsResponse = await fetch(
       `https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases/${airVersion}/urls`
-    ).json();
+    );
+    const urls = await urlsResponse.json();
+
     var urlField = null;
     if (process.platform.startsWith("darwin")) {
       urlField = "AIR_Mac";
@@ -75,12 +79,15 @@ async function setupHarmanAIR() {
       urlField = "AIR_Linux";
     }
     if (!urlField) {
-      core.setFailed(`Adobe AIR SDK version '${urlField}' not found`);
+      core.setFailed(
+        `Adobe AIR SDK version '${airVersion}' not found for platform ${process.platform}`
+      );
       return;
     }
 
     const archiveUrl = `https://airsdk.harman.com${urls[urlField]}?license=accepted`;
     const filename = path.basename(new URL(archiveUrl).pathname);
+    const installLocation = getInstallLocation();
     installSdkFromUrl(archiveUrl, filename, installLocation);
   } catch (error) {
     core.setFailed(error.message);
@@ -96,8 +103,6 @@ async function setupAdobeAIR() {
       throw new Error("Invalid Adobe AIR version: " + airVersion);
     }
     console.log("Adobe AIR SDK version: " + airVersion);
-
-    const installLocation = getInstallLocation();
 
     let airPlatform = null;
     let filename = "AIRSDK_Compiler";
@@ -119,6 +124,7 @@ async function setupAdobeAIR() {
     console.log("Adobe AIR platform: " + airPlatform);
 
     const archiveUrl = `https://airdownload.adobe.com/air/${airPlatform}/download/${airVersion}/${filename}`;
+    const installLocation = getInstallLocation();
     installSdkFromUrl(archiveUrl, filename, installLocation);
   } catch (error) {
     core.setFailed(error.message);
