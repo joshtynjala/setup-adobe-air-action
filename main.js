@@ -3,6 +3,7 @@ const toolCache = require("@actions/tool-cache");
 const fs = require("fs");
 const path = require("path");
 const child_process = require("child_process");
+const fetch = require("node-fetch");
 
 const ENV_AIR_HOME = "AIR_HOME";
 
