@@ -88,7 +88,7 @@ async function setupHarmanAIR() {
 
 async function setupAdobeAIR() {
   try {
-    const airVersion = core.getInput("air-version");
+    let airVersion = core.getInput("air-version");
     if (!airVersion) {
       airVersion = "32.0";
     } else if (!/^\d{1,2}\.\d$/.test(airVersion)) {
