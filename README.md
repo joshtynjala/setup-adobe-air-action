@@ -17,6 +17,6 @@ _(Required)_ Set to `true` if you accept the [Adobe AIR SDK License Agreement](h
 ```yml
 uses: joshtynjala/setup-adobe-air-action@v2
 with:
-  air-version: "50.0"
+  air-version: "50.0.1.1"
   accept-license: true
 ```
