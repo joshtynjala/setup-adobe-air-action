@@ -141,7 +141,10 @@ async function installSdkFromUrl(
         child_process.execSync(`cp -r /Volumes/AIR\\ SDK/* ${installLocation}`);
         break;
       case ".zip":
-        child_process.execSync(`/usr/bin/unzip -o -q ${downloadedPath}`);
+        // toolCache.extractZip() doesn't seem to work on macOS or Linux
+        child_process.execSync(
+          `/usr/bin/unzip -o -q ${downloadedPath} -d ${installLocation}`
+        );
         break;
       default:
         throw new Error(
