@@ -11,7 +11,7 @@ inputs:
     required: false
 
 runs:
-  using: "node12"
+  using: "node16"
   main: "main.js"
 
 branding:
