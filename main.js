@@ -131,21 +131,23 @@ async function installSdkFromUrl(
   const downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
   fs.mkdirSync(installLocation, { recursive: true });
 
-  switch (path.extname(filename)) {
-    case ".dmg":
-      child_process.execSync(`hdiutil attach ${filename}`);
-      child_process.execSync(`cp -r /Volumes/AIR\\ SDK/* ${installLocation}`);
-      break;
-    case ".zip":
-      console.warn(archiveUrl);
-      console.warn(downloadedPath);
-      console.warn(filename);
-      console.warn(installLocation);
-      console.error(fs.existsSync(downloadedPath), fs.existsSync(filename));
-      await toolCache.extractZip("./" + filename, installLocation);
-      break;
-    default:
-      await toolCache.extractTar(downloadedPath, installLocation, "xj");
+  if (process.platform.startsWith("win")) {
+    await toolCache.extractZip(downloadedPath, installLocation);
+  } else {
+    const extname = path.extname(filename);
+    switch (extname) {
+      case ".dmg":
+        child_process.execSync(`hdiutil attach ${downloadedPath}`);
+        child_process.execSync(`cp -r /Volumes/AIR\\ SDK/* ${installLocation}`);
+        break;
+      case ".zip":
+        child_process.execSync(`/usr/bin/unzip -o -q ${downloadedPath}`);
+        break;
+      default:
+        throw new Error(
+          `Failed to extract '${downloadedPath}' because the file extension is unrecognized: ${extname}`
+        );
+    }
   }
 
   core.addPath(path.resolve(installLocation, "bin"));
