@@ -142,7 +142,7 @@ async function installSdkFromUrl(
       console.warn(filename);
       console.warn(installLocation);
       console.error(fs.existsSync(downloadedPath), fs.existsSync(filename));
-      await toolCache.extractZip(downloadedPath, installLocation);
+      await toolCache.extractZip("./" + filename, installLocation);
       break;
     default:
       await toolCache.extractTar(downloadedPath, installLocation, "xj");
