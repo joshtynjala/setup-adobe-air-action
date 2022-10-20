@@ -9,50 +9,63 @@ on:
       - master
 
 jobs:
-  windows-no-version:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-      - name: Check executables
-        run: |
-          Get-Command mxmlc
-          Get-Command compc
-          Get-Command adt
+  # windows-no-version:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ./
+  #     - name: Check executables
+  #       run: |
+  #         Get-Command mxmlc
+  #         Get-Command compc
+  #         Get-Command adt
 
-  macos-no-version:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-      - name: Check executables
-        run: |
-          which mxmlc
-          which compc
-          which adt
+  # macos-no-version:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ./
+  #     - name: Check executables
+  #       run: |
+  #         which mxmlc
+  #         which compc
+  #         which adt
 
-  windows-adobe-air-version:
+  # windows-adobe-air-version:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ./
+  #       with:
+  #         air-version: "32.0"
+  #     - name: Check executables
+  #       run: |
+  #         Get-Command mxmlc
+  #         Get-Command compc
+  #         Get-Command adt
+
+  # macos-adobe-air-version:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ./
+  #       with:
+  #         air-version: "32.0"
+  #     - name: Check executables
+  #       run: |
+  #         which mxmlc
+  #         which compc
+  #         which adt
+
+  windows-harman-air-version:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          air-version: "32.0"
+          air-version: "50.0"
       - name: Check executables
         run: |
           Get-Command mxmlc
           Get-Command compc
           Get-Command adt
-
-  macos-adobe-air-version:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-        with:
-          air-version: "32.0"
-      - name: Check executables
-        run: |
-          which mxmlc
-          which compc
-          which adt
