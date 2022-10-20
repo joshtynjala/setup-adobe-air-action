@@ -78,7 +78,7 @@ async function setupHarmanAIR() {
       return;
     }
 
-    const archiveUrl = `https://airsdk.harman.com${urls[urlField]}`;
+    const archiveUrl = `https://airsdk.harman.com${urls[urlField]}?license=accepted`;
     const filename = path.basename(new URL(archiveUrl).pathname);
     installSdkFromUrl(archiveUrl, filename, installLocation);
   } catch (error) {
