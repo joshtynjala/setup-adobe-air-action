@@ -55,23 +55,8 @@ jobs:
   #         Get-Command adt
   #         adt -version
 
-  macos-harman-air-version:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
-        with:
-          air-version: "50.0"
-          accept-license: true
-      - name: Check executables
-        run: |
-          which mxmlc
-          which compc
-          which adt
-          adt -version
-
-  # ubuntu-harman-air-version:
-  #   runs-on: ubuntu-latest
+  # macos-harman-air-version:
+  #   runs-on: macos-latest
   #   steps:
   #     - uses: actions/checkout@v3
   #     - uses: ./
@@ -84,3 +69,18 @@ jobs:
   #         which compc
   #         which adt
   #         adt -version
+
+  ubuntu-harman-air-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          air-version: "50.0"
+          accept-license: true
+      - name: Check executables
+        run: |
+          which mxmlc
+          which compc
+          which adt
+          adt -version
