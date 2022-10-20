@@ -9,58 +9,83 @@ on:
       - master
 
 jobs:
-  # windows-no-version:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: ./
-  #     - name: Check executables
-  #       run: |
-  #         Get-Command mxmlc
-  #         Get-Command compc
-  #         Get-Command adt
 
-  # macos-no-version:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: ./
-  #     - name: Check executables
-  #       run: |
-  #         which mxmlc
-  #         which compc
-  #         which adt
+  windows-adobe-air-version:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          air-version: "32.0"
+          # no accept-license required
+      - name: Check executables
+        run: |
+          Get-Command mxmlc
+          Get-Command compc
+          Get-Command adt
+          adt -version
 
-  # windows-adobe-air-version:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: ./
-  #       with:
-  #         air-version: "32.0"
-  #     - name: Check executables
-  #       run: |
-  #         Get-Command mxmlc
-  #         Get-Command compc
-  #         Get-Command adt
+  macos-adobe-air-version:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          air-version: "32.0"
+          # no accept-license required
+      - name: Check executables
+        run: |
+          which mxmlc
+          which compc
+          which adt
+          adt -version
 
-  # macos-adobe-air-version:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: ./
-  #       with:
-  #         air-version: "32.0"
-  #     - name: Check executables
-  #       run: |
-  #         which mxmlc
-  #         which compc
-  #         which adt
+  windows-no-version:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          accept-license: true
+      - name: Check executables
+        run: |
+          Get-Command mxmlc
+          Get-Command compc
+          Get-Command adt
+          adt -version
+
+  macos-no-version:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          accept-license: true
+      - name: Check executables
+        run: |
+          which mxmlc
+          which compc
+          which adt
+          adt -version
+
+  ubuntu-no-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          accept-license: true
+      - name: Check executables
+        run: |
+          which mxmlc
+          which compc
+          which adt
+          adt -version
 
   windows-harman-air-version:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./
         with:
           air-version: "50.0"
@@ -70,3 +95,34 @@ jobs:
           Get-Command mxmlc
           Get-Command compc
           Get-Command adt
+          adt -version
+
+  macos-harman-air-version:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          air-version: "50.0"
+          accept-license: true
+      - name: Check executables
+        run: |
+          which mxmlc
+          which compc
+          which adt
+          adt -version
+
+  ubuntu-harman-air-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          air-version: "50.0"
+          accept-license: true
+      - name: Check executables
+        run: |
+          which mxmlc
+          which compc
+          which adt
+          adt -version

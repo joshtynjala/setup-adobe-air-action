@@ -6,7 +6,7 @@ This action downloads the [Adobe AIR SDK by HARMAN](https://airsdk.harman.com/),
 
 ### `air-version`
 
-_(Required)_ Version of the Adobe AIR SDK to download. An exact version, such as `50.0.1.1`, is recommended. However, a less specific version, like `50.0` or `50`, is allowed.
+_(Required)_ The version of the Adobe AIR SDK to set up. An exact version, such as `50.0.1.1`, is recommended. However, a less specific version, like `50.0` or `50`, is allowed.
 
 ### `accept-license`
 

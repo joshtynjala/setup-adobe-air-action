@@ -4,11 +4,11 @@ description: Action to setup Adobe AIR SDK
 
 inputs:
   air-version:
-    description: "Version of the Adobe AIR SDK (example: 32.0)"
-    required: false
+    description: "Version of the Adobe AIR SDK (example: 50.0)"
+    required: true
   accept-license:
     description: "Accept the Adobe AIR SDK License Agreement (example: true)"
-    required: false
+    required: true
 
 runs:
   using: "node16"
