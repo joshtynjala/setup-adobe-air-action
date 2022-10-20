@@ -20,10 +20,10 @@ function setupAIR() {
     const parsedMajorVersion = parseInt(airVersion.split(".")[0], 10);
     if (parsedMajorVersion <= 32) {
       // try to set up an old Adobe version of the AIR SDK
-      setupAdobeAIR();
+      setupAdobeAIR(airVersion);
       return;
     }
-    setupHarmanAIR();
+    setupHarmanAIR(airVersion);
   } catch (error) {
     core.setFailed(error.message);
   }
