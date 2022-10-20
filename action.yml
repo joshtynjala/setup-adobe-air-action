@@ -6,6 +6,9 @@ inputs:
   air-version:
     description: "Version of the Adobe AIR SDK (example: 32.0)"
     required: false
+  accept-license:
+    description: "Accept the Adobe AIR SDK License Agreement (example: true)"
+    required: false
 
 runs:
   using: "node12"

@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  windows:
+  windows-no-version:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
           Get-Command compc
           Get-Command adt
 
-  macos:
+  macos-no-version:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
           which compc
           which adt
 
-  windows-air-version:
+  windows-adobe-air-version:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -44,7 +44,7 @@ jobs:
           Get-Command compc
           Get-Command adt
 
-  macos-air-version:
+  macos-adobe-air-version:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
