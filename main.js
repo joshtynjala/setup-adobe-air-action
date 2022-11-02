@@ -2,6 +2,7 @@
 const core = require("@actions/core");
 const toolCache = require("@actions/tool-cache");
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const child_process = require("child_process");
 const fetch = require("node-fetch").default;
@@ -15,6 +16,13 @@ function setupAIR() {
       throw new Error(
         "Parameter `accept-license` must be true to accept the Adobe AIR SDK License Agreement. Find it here: https://airsdk.harman.com/assets/pdfs/HARMAN%20AIR%20SDK%20License%20Agreement.pdf"
       );
+    }
+    const licenseFile = core.getInput("license-base64", { required: false });
+    if (licenseFile) {
+      const licenseBuffer = Buffer.from(licenseFile, "base64");
+      const licensePath = path.join(os.homedir(), ".airsdk", "adt.lic");
+      fs.mkdirSync(path.dirname(licensePath), { recursive: true });
+      fs.writeFileSync(licensePath, licenseBuffer);
     }
     const airVersion = core.getInput("air-version", { required: true });
     const parsedMajorVersion = parseInt(airVersion.split(".")[0], 10);

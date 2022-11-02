@@ -10,67 +10,111 @@ on:
 
 jobs:
 
-  windows-adobe-air-version:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
-        with:
-          air-version: "32.0"
-          accept-license: true
-      - name: Check executables
-        run: |
-          Get-Command mxmlc
-          Get-Command compc
-          Get-Command adt
-          adt -version
+  # windows-adobe-air-version:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./
+  #       with:
+  #         air-version: "32.0"
+  #         accept-license: true
+  #     - name: Check executables
+  #       run: |
+  #         Get-Command mxmlc
+  #         Get-Command compc
+  #         Get-Command adt
+  #         adt -version
 
-  macos-adobe-air-version:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
-        with:
-          air-version: "32.0"
-          accept-license: true
-      - name: Check executables
-        run: |
-          which mxmlc
-          which compc
-          which adt
-          adt -version
+  # macos-adobe-air-version:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./
+  #       with:
+  #         air-version: "32.0"
+  #         accept-license: true
+  #     - name: Check executables
+  #       run: |
+  #         which mxmlc
+  #         which compc
+  #         which adt
+  #         adt -version
 
-  windows-harman-air-version:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
-        with:
-          air-version: "50.0"
-          accept-license: true
-      - name: Check executables
-        run: |
-          Get-Command mxmlc
-          Get-Command compc
-          Get-Command adt
-          adt -version
+  # windows-harman-air-version:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./
+  #       with:
+  #         air-version: "50.0"
+  #         accept-license: true
+  #     - name: Check executables
+  #       run: |
+  #         Get-Command mxmlc
+  #         Get-Command compc
+  #         Get-Command adt
+  #         adt -version
 
-  macos-harman-air-version:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
-        with:
-          air-version: "50.0"
-          accept-license: true
-      - name: Check executables
-        run: |
-          which mxmlc
-          which compc
-          which adt
-          adt -version
+  # macos-harman-air-version:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./
+  #       with:
+  #         air-version: "50.0"
+  #         accept-license: true
+  #     - name: Check executables
+  #       run: |
+  #         which mxmlc
+  #         which compc
+  #         which adt
+  #         adt -version
 
-  ubuntu-harman-air-version:
+  # ubuntu-harman-air-version:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./
+  #       with:
+  #         air-version: "50.0"
+  #         accept-license: true
+  #     - name: Check executables
+  #       run: |
+  #         which mxmlc
+  #         which compc
+  #         which adt
+
+  # ubuntu-harman-air-version-major:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./
+  #       with:
+  #         air-version: "50"
+  #         accept-license: true
+  #     - name: Check executables
+  #       run: |
+  #         which mxmlc
+  #         which compc
+  #         which adt
+  #         adt -version
+
+  # ubuntu-harman-air-version-exact:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./
+  #       with:
+  #         air-version: "33.1.1.929"
+  #         accept-license: true
+  #     - name: Check executables
+  #       run: |
+  #         which mxmlc
+  #         which compc
+  #         which adt
+  #         adt -version
+
+  ubuntu-harman-air-license:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -78,38 +122,8 @@ jobs:
         with:
           air-version: "50.0"
           accept-license: true
-      - name: Check executables
+          license-base64: ${{ secrets.AIR_SDK_LICENSE_FILE }}
+      - name: Check license
         run: |
-          which mxmlc
-          which compc
-          which adt
-
-  ubuntu-harman-air-version-major:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
-        with:
-          air-version: "50"
-          accept-license: true
-      - name: Check executables
-        run: |
-          which mxmlc
-          which compc
-          which adt
-          adt -version
-
-  ubuntu-harman-air-version-exact:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
-        with:
-          air-version: "33.1.1.929"
-          accept-license: true
-      - name: Check executables
-        run: |
-          which mxmlc
-          which compc
-          which adt
-          adt -version
+          adt -license
+          test -f ~/.airsdk/adt.lic
