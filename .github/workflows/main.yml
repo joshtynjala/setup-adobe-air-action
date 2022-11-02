@@ -125,7 +125,7 @@ jobs:
           license-base64: ${{ secrets.AIR_SDK_LICENSE_FILE }}
       - name: Check license
         run: |
-          pwsh -Command {If (/Users/joshtynjala/Development/flash/sdks/AIRSDK_33.1.1.929/bin/adt -license 2>&1 | Select-String -Quiet "DeveloperID="){Exit 0}Else{Exit 1}}
+          pwsh -Command {If (adt -license 2>&1 | Select-String -Quiet "DeveloperID="){Exit 0}Else{Exit 1}}
 
   # macos-harman-air-license:
   #   runs-on: macos-latest
