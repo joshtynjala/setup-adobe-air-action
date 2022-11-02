@@ -125,7 +125,7 @@ jobs:
           license-base64: ${{ secrets.AIR_SDK_LICENSE_FILE }}
       - name: Check license
         run: |
-          adt -license | Select-String -Quiet "DeveloperID="
+          adt -license 2>&1 | Select-String -Quiet "DeveloperID="
 
   macos-harman-air-license:
     runs-on: macos-latest
