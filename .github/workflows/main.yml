@@ -126,4 +126,4 @@ jobs:
       - name: Check license
         run: |
           adt -license
-          test -f $HOME/.airsdk/adt.lic
+          test -e ~/.airsdk/adt.lic
