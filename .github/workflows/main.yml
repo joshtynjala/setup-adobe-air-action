@@ -126,4 +126,4 @@ jobs:
       - name: Check license
         run: |
           adt -license
-          test -e ~/.airsdk/adt.lic
+          adt -license 2>&1 | grep -q "DeveloperID="
