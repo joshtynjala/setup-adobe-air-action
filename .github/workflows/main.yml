@@ -125,5 +125,4 @@ jobs:
           license-base64: ${{ secrets.AIR_SDK_LICENSE_FILE }}
       - name: Check license
         run: |
-          adt -license
           adt -license 2>&1 | grep -q "DeveloperID="
