@@ -114,6 +114,32 @@ jobs:
   #         which adt
   #         adt -version
 
+  windows-harman-air-license:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          air-version: "50.0"
+          accept-license: true
+          license-base64: ${{ secrets.AIR_SDK_LICENSE_FILE }}
+      - name: Check license
+        run: |
+          adt -license | Select-String -Quiet "DeveloperID="
+
+  macos-harman-air-license:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          air-version: "50.0"
+          accept-license: true
+          license-base64: ${{ secrets.AIR_SDK_LICENSE_FILE }}
+      - name: Check license
+        run: |
+          adt -license 2>&1 | grep -q "DeveloperID="
+
   ubuntu-harman-air-license:
     runs-on: ubuntu-latest
     steps:
