@@ -9,6 +9,9 @@ inputs:
   accept-license:
     description: "Accept the Adobe AIR SDK License Agreement (example: true)"
     required: true
+  license-base64:
+    description: Use with an encrypted secret to optionally provide a valid adt.lic file, encoded as a Base64 string
+    required: false
 
 runs:
   using: "node16"
