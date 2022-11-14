@@ -9,7 +9,7 @@ const fetch = require("node-fetch").default;
 
 const ENV_AIR_HOME = "AIR_HOME";
 
-function setupAIR() {
+async function setupAIR() {
   try {
     const acceptLicense = core.getInput("accept-license", { required: true });
     if (!acceptLicense) {
@@ -28,10 +28,10 @@ function setupAIR() {
     const parsedMajorVersion = parseInt(airVersion.split(".")[0], 10);
     if (parsedMajorVersion <= 32) {
       // try to set up an old Adobe version of the AIR SDK
-      setupAdobeAIR(airVersion);
+      await setupAdobeAIR(airVersion);
       return;
     }
-    setupHarmanAIR(airVersion);
+    await setupHarmanAIR(airVersion);
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -122,7 +122,7 @@ async function setupAdobeAIR(/** @type string */ airVersion) {
 
   const archiveUrl = `https://airdownload.adobe.com/air/${airPlatform}/download/${airVersion}/${filename}`;
   const installLocation = getInstallLocation();
-  installSdkFromUrl(archiveUrl, filename, installLocation);
+  await installSdkFromUrl(archiveUrl, filename, installLocation);
 }
 
 function getInstallLocation() {
