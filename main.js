@@ -92,7 +92,7 @@ async function setupHarmanAIR(/** @type string */ airVersion) {
   const archiveUrl = `https://airsdk.harman.com${urls[urlField]}?license=accepted`;
   const filename = path.basename(new URL(archiveUrl).pathname);
   const installLocation = getInstallLocation();
-  installSdkFromUrl(archiveUrl, filename, installLocation);
+  await installSdkFromUrl(archiveUrl, filename, installLocation, airVersion);
 }
 
 async function setupAdobeAIR(/** @type string */ airVersion) {
@@ -122,7 +122,7 @@ async function setupAdobeAIR(/** @type string */ airVersion) {
 
   const archiveUrl = `https://airdownload.adobe.com/air/${airPlatform}/download/${airVersion}/${filename}`;
   const installLocation = getInstallLocation();
-  await installSdkFromUrl(archiveUrl, filename, installLocation);
+  await installSdkFromUrl(archiveUrl, filename, installLocation, airVersion);
 }
 
 function getInstallLocation() {
@@ -134,7 +134,8 @@ function getInstallLocation() {
 async function installSdkFromUrl(
   /** @type string */ archiveUrl,
   /** @type string */ filename,
-  /** @type string */ installLocation
+  /** @type string */ installLocation,
+  /** @type string */ airVersion
 ) {
   const downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
   fs.mkdirSync(installLocation, { recursive: true });
@@ -161,8 +162,13 @@ async function installSdkFromUrl(
     }
   }
 
-  core.addPath(path.resolve(installLocation, "bin"));
-  core.exportVariable(ENV_AIR_HOME, installLocation);
+  const cacheLocation = await toolCache.cacheDir(
+    installLocation,
+    "adobe-air",
+    airVersion
+  );
+  core.addPath(path.resolve(cacheLocation, "bin"));
+  core.exportVariable(ENV_AIR_HOME, cacheLocation);
 }
 
 setupAIR();
