@@ -66,7 +66,7 @@ async function setupHarmanAIR(/** @type string */ airVersion) {
   }
   airVersion = bestMatch;
 
-  console.log(`Adobe AIR SDK (HARMAN) version: ${airVersion}`);
+  core.info(`Adobe AIR SDK (HARMAN) version: ${airVersion}`);
 
   const urlsResponse = await fetch(
     `https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases/${airVersion}/urls`
@@ -87,7 +87,7 @@ async function setupHarmanAIR(/** @type string */ airVersion) {
       `Adobe AIR SDK version '${airVersion}' not found for platform ${process.platform}`
     );
   }
-  console.log(`Adobe AIR SDK type: ${urlField}`);
+  core.info(`Adobe AIR SDK type: ${urlField}`);
 
   const archiveUrl = `https://airsdk.harman.com${urls[urlField]}?license=accepted`;
   const filename = path.basename(new URL(archiveUrl).pathname);
@@ -104,7 +104,7 @@ async function setupAdobeAIR(/** @type string */ airVersion) {
       `Expected Adobe AIR major version 32 or newer. Received version: ${airVersion}`
     );
   }
-  console.log(`Adobe AIR SDK version: ${airVersion}`);
+  core.info(`Adobe AIR SDK version: ${airVersion}`);
   let airPlatform = null;
   let filename = "AIRSDK_Compiler";
   if (process.platform.startsWith("darwin")) {
@@ -118,7 +118,7 @@ async function setupAdobeAIR(/** @type string */ airVersion) {
       `Adobe AIR SDK ${airVersion} setup is not supported on Linux`
     );
   }
-  console.log(`Adobe AIR SDK type: ${airPlatform}`);
+  console.info(`Adobe AIR SDK type: ${airPlatform}`);
 
   const archiveUrl = `https://airdownload.adobe.com/air/${airPlatform}/download/${airVersion}/${filename}`;
   const installLocation = getInstallLocation();
