@@ -8,6 +8,7 @@ const child_process = require("child_process");
 const fetch = require("node-fetch").default;
 
 const ENV_AIR_HOME = "AIR_HOME";
+const AIR_TOOL_CACHE_NAME = "adobe-air";
 
 async function setupAIR() {
   try {
@@ -137,7 +138,7 @@ async function installSdkFromUrl(
   /** @type string */ installLocation,
   /** @type string */ airVersion
 ) {
-  let cacheLocation = toolCache.find("adobe-air", airVersion);
+  let cacheLocation = toolCache.find(AIR_TOOL_CACHE_NAME, airVersion);
   if (cacheLocation) {
     core.info(`Resolved Adobe AIR SDK ${airVersion} from tool-cache`);
   } else {
@@ -173,7 +174,7 @@ async function installSdkFromUrl(
 
     cacheLocation = await toolCache.cacheDir(
       installLocation,
-      "adobe-air",
+      AIR_TOOL_CACHE_NAME,
       airVersion
     );
   }
