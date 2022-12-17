@@ -138,7 +138,12 @@ async function installSdkFromUrl(
   /** @type string */ airVersion
 ) {
   let cacheLocation = toolCache.find("adobe-air", airVersion);
-  if (!cacheLocation) {
+  if (cacheLocation) {
+    core.info(`Resolved Adobe AIR SDK ${airVersion} from tool-cache`);
+  } else {
+    core.info(
+      `Adobe AIR SDK ${airVersion} was not found in tool-cache. Trying to download...`
+    );
     const downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
     fs.mkdirSync(installLocation, { recursive: true });
 
