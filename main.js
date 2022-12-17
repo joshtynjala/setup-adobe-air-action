@@ -137,36 +137,41 @@ async function installSdkFromUrl(
   /** @type string */ installLocation,
   /** @type string */ airVersion
 ) {
-  const downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
-  fs.mkdirSync(installLocation, { recursive: true });
+  let cacheLocation = toolCache.find("adobe-air", airVersion);
+  if (!cacheLocation) {
+    const downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
+    fs.mkdirSync(installLocation, { recursive: true });
 
-  if (process.platform.startsWith("win")) {
-    await toolCache.extractZip(downloadedPath, installLocation);
-  } else {
-    const extname = path.extname(filename);
-    switch (extname) {
-      case ".dmg":
-        child_process.execSync(`hdiutil attach ${downloadedPath}`);
-        child_process.execSync(`cp -r /Volumes/AIR\\ SDK/* ${installLocation}`);
-        break;
-      case ".zip":
-        // toolCache.extractZip() doesn't seem to work properly on macOS or Linux
-        child_process.execSync(
-          `/usr/bin/unzip -o -q ${downloadedPath} -d ${installLocation}`
-        );
-        break;
-      default:
-        throw new Error(
-          `Failed to extract '${downloadedPath}' because the file extension is unrecognized: ${extname}`
-        );
+    if (process.platform.startsWith("win")) {
+      await toolCache.extractZip(downloadedPath, installLocation);
+    } else {
+      const extname = path.extname(filename);
+      switch (extname) {
+        case ".dmg":
+          child_process.execSync(`hdiutil attach ${downloadedPath}`);
+          child_process.execSync(
+            `cp -r /Volumes/AIR\\ SDK/* ${installLocation}`
+          );
+          break;
+        case ".zip":
+          // toolCache.extractZip() doesn't seem to work properly on macOS or Linux
+          child_process.execSync(
+            `/usr/bin/unzip -o -q ${downloadedPath} -d ${installLocation}`
+          );
+          break;
+        default:
+          throw new Error(
+            `Failed to extract '${downloadedPath}' because the file extension is unrecognized: ${extname}`
+          );
+      }
     }
-  }
 
-  const cacheLocation = await toolCache.cacheDir(
-    installLocation,
-    "adobe-air",
-    airVersion
-  );
+    cacheLocation = await toolCache.cacheDir(
+      installLocation,
+      "adobe-air",
+      airVersion
+    );
+  }
   core.addPath(path.resolve(cacheLocation, "bin"));
   core.exportVariable(ENV_AIR_HOME, cacheLocation);
 }
