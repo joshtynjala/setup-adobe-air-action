@@ -88,7 +88,7 @@ async function setupHarmanAIR(/** @type string */ airVersion) {
       `Adobe AIR SDK version '${airVersion}' not found for platform ${process.platform}`
     );
   }
-  core.info(`Adobe AIR SDK type: ${urlField}`);
+  core.debug(`Adobe AIR SDK type: ${urlField}`);
 
   const archiveUrl = `https://airsdk.harman.com${urls[urlField]}?license=accepted`;
   const filename = path.basename(new URL(archiveUrl).pathname);
@@ -140,9 +140,11 @@ async function installSdkFromUrl(
 ) {
   let cacheLocation = toolCache.find(AIR_TOOL_CACHE_NAME, airVersion);
   if (cacheLocation) {
-    core.info(`Resolved Adobe AIR SDK ${airVersion} from tool-cache`);
+    core.debug(
+      `Resolved Adobe AIR SDK ${airVersion} from tool-cache at: ${cacheLocation}`
+    );
   } else {
-    core.info(
+    core.debug(
       `Adobe AIR SDK ${airVersion} was not found in tool-cache. Trying to download...`
     );
     const downloadedPath = await toolCache.downloadTool(archiveUrl, filename);
@@ -176,6 +178,9 @@ async function installSdkFromUrl(
       installLocation,
       AIR_TOOL_CACHE_NAME,
       airVersion
+    );
+    core.debug(
+      `Adobe AIR SDK ${airVersion} added to tool-cache at: ${cacheLocation}`
     );
   }
   core.addPath(path.resolve(cacheLocation, "bin"));
