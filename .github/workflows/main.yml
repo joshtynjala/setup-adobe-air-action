@@ -18,6 +18,7 @@ jobs:
           accept-license: true
       - name: Check executables
         run: |
+          Test-Path -Path $Env:AIR_HOME
           Get-Command mxmlc
           Get-Command compc
           Get-Command adt
@@ -33,6 +34,7 @@ jobs:
           accept-license: true
       - name: Check executables
         run: |
+          test -d "$AIR_HOME"
           which mxmlc
           which compc
           which adt
@@ -48,6 +50,7 @@ jobs:
           accept-license: true
       - name: Check executables
         run: |
+          Test-Path -Path $Env:AIR_HOME
           Get-Command mxmlc
           Get-Command compc
           Get-Command adt
@@ -64,6 +67,7 @@ jobs:
           accept-license: true
       - name: Check executables
         run: |
+          test -d "$AIR_HOME"
           which mxmlc
           which compc
           which adt
@@ -80,6 +84,7 @@ jobs:
           accept-license: true
       - name: Check executables
         run: |
+          test -d "$AIR_HOME"
           which mxmlc
           which compc
           which adt
@@ -95,6 +100,7 @@ jobs:
           accept-license: true
       - name: Check executables
         run: |
+          test -d "$AIR_HOME"
           which mxmlc
           which compc
           which adt
@@ -111,6 +117,7 @@ jobs:
           accept-license: true
       - name: Check executables
         run: |
+          test -d "$AIR_HOME"
           which mxmlc
           which compc
           which adt
