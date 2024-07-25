@@ -90,7 +90,14 @@ async function setupHarmanAIR(/** @type string */ airVersion) {
   }
   core.debug(`Adobe AIR SDK type: ${urlField}`);
 
-  const archiveUrl = `https://airsdk.harman.com${urls[urlField]}?license=accepted`;
+  const urlPath = urls[urlField];
+  if (!urlPath) {
+    throw new Error(
+      `Adobe AIR SDK download URL for '${urlField}' version '${airVersion}' not found`
+    );
+  }
+
+  const archiveUrl = `https://airsdk.harman.com${urlPath}?license=accepted`;
   const filename = path.basename(new URL(archiveUrl).pathname);
   const installLocation = getInstallLocation();
   await installSdkFromUrl(archiveUrl, filename, installLocation, airVersion);
