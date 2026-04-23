@@ -11,7 +11,7 @@ jobs:
   windows-adobe-air-version:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "32.0"
@@ -27,7 +27,7 @@ jobs:
   macos-adobe-air-version:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "32.0"
@@ -43,7 +43,7 @@ jobs:
   windows-harman-air-version:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "50.0"
@@ -60,7 +60,7 @@ jobs:
   macos-harman-air-version:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "50.0"
@@ -77,7 +77,7 @@ jobs:
   ubuntu-harman-air-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "50.0"
@@ -93,7 +93,7 @@ jobs:
   ubuntu-harman-air-version-major:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "50"
@@ -110,7 +110,7 @@ jobs:
   ubuntu-harman-air-version-exact:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "33.1.1.929"
@@ -127,7 +127,7 @@ jobs:
   windows-harman-air-license:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "50.0"
@@ -140,7 +140,7 @@ jobs:
   macos-harman-air-license:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "50.0"
@@ -153,7 +153,7 @@ jobs:
   ubuntu-harman-air-license:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: ./
         with:
           air-version: "50.0"
