@@ -33,7 +33,7 @@ async function setupAIR() {
       return;
     }
     await setupHarmanAIR(airVersion);
-  } catch (error) {
+  } catch (/** @type any */ error) {
     core.setFailed(error.message);
   }
 }
