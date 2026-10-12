@@ -3,7 +3,8 @@
   "version": "2.2.0",
   "private": true,
   "description": "setup Adobe AIR SDK action",
-  "main": "main.js",
+  "type": "module",
+  "main": "main.mjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/joshtynjala/setup-adobe-air-action.git"

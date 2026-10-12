@@ -1,11 +1,11 @@
 // @ts-check
-const core = require("@actions/core");
-const toolCache = require("@actions/tool-cache");
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
-const child_process = require("child_process");
-const fetch = require("node-fetch").default;
+import * as core from '@actions/core';
+import * as toolCache from "@actions/tool-cache";
+import * as fs from "node:fs";
+import * as os from "node:os";
+import * as path from "node:path";
+import * as child_process from "node:child_process";
+import fetch from "node-fetch";
 
 const ENV_AIR_HOME = "AIR_HOME";
 const AIR_TOOL_CACHE_NAME = "adobe-air";
