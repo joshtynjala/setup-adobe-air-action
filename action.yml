@@ -15,7 +15,7 @@ inputs:
 
 runs:
   using: "node24"
-  main: "main.js"
+  main: "main.mjs"
 
 branding:
   color: "blue"
