@@ -40,7 +40,7 @@ jobs:
           which adt
           adt -version
 
-  windows-harman-air-version:
+  windows-wipro-air-version:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
@@ -57,7 +57,7 @@ jobs:
           adt -version
           pwsh -Command {If (adt -license 2>&1 | Select-String -Quiet "DeveloperID="){Exit 1}Else{Exit 0}}
 
-  macos-harman-air-version:
+  macos-wipro-air-version:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
@@ -74,7 +74,7 @@ jobs:
           adt -version
           adt -license 2>&1 | grep -q "No license file"
 
-  ubuntu-harman-air-version:
+  ubuntu-wipro-air-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -90,7 +90,7 @@ jobs:
           which adt
           adt -license 2>&1 | grep -q "No license file"
 
-  ubuntu-harman-air-version-major:
+  ubuntu-wipro-air-version-major:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -107,7 +107,7 @@ jobs:
           adt -version
           adt -license 2>&1 | grep -q "No license file"
 
-  ubuntu-harman-air-version-exact:
+  ubuntu-wipro-air-version-exact:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -124,7 +124,7 @@ jobs:
           adt -version
           adt -license 2>&1 | grep -q "No license file"
 
-  windows-harman-air-license:
+  windows-wipro-air-license:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
@@ -137,7 +137,7 @@ jobs:
         run: |
           pwsh -Command {If (adt -license 2>&1 | Select-String -Quiet "DeveloperID="){Exit 0}Else{Exit 1}}
 
-  macos-harman-air-license:
+  macos-wipro-air-license:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
@@ -150,7 +150,7 @@ jobs:
         run: |
           adt -license 2>&1 | grep -q "DeveloperID="
 
-  ubuntu-harman-air-license:
+  ubuntu-wipro-air-license:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

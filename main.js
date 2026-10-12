@@ -32,13 +32,13 @@ async function setupAIR() {
       await setupAdobeAIR(airVersion);
       return;
     }
-    await setupHarmanAIR(airVersion);
+    await setupWiproAIR(airVersion);
   } catch (/** @type any */ error) {
     core.setFailed(error.message);
   }
 }
 
-async function setupHarmanAIR(/** @type string */ airVersion) {
+async function setupWiproAIR(/** @type string */ airVersion) {
   const releasesResponse = await fetch(
     "https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases"
   );
@@ -63,11 +63,11 @@ async function setupHarmanAIR(/** @type string */ airVersion) {
     }
   }
   if (bestMatch == null) {
-    throw new Error(`Adobe AIR SDK (HARMAN) version '${airVersion}' not found`);
+    throw new Error(`Adobe AIR SDK (Wipro) version '${airVersion}' not found`);
   }
   airVersion = bestMatch;
 
-  core.info(`Adobe AIR SDK (HARMAN) version: ${airVersion}`);
+  core.info(`Adobe AIR SDK (Wipro) version: ${airVersion}`);
 
   const urlsResponse = await fetch(
     `https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases/${airVersion}/urls`

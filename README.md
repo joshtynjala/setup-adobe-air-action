@@ -1,8 +1,8 @@
 # Github Action to setup the Adobe AIR SDK
 
-This action downloads the [Adobe AIR SDK by HARMAN](https://airsdk.wxlift.com/), adds the SDK's _bin_ folder to the `PATH`, and sets the `AIR_HOME` environment variable.
+This action downloads the [Adobe AIR SDK by Wipro (formerly HARMAN)](https://airsdk.wxlift.com/), adds the SDK's _bin_ folder to the `PATH`, and sets the `AIR_HOME` environment variable.
 
-**Note:** Purchasing a [commercial license](https://airsdk.harman.com/pricing) is required to unlock certain new, restricted features of the Adobe AIR SDK by HARMAN. However, "compiling SWFs and using other utilities such as the ATF tools remain a free activity."
+**Note:** Purchasing a [commercial license](https://airsdk.wxlift.com/pricing) is required to unlock certain new, restricted features of the Adobe AIR SDK by Wipro. However, "compiling SWFs and using other utilities such as the ATF tools remain a free activity."
 
 ## Inputs
 
@@ -22,7 +22,7 @@ _(Optional)_ Use with an [encrypted secret](https://docs.github.com/en/actions/s
 
 ## Example usage
 
-Use the AIR SDK by HARMAN for free activities:
+Use the AIR SDK by Wipro for free activities:
 
 ```yml
 uses: joshtynjala/setup-adobe-air-action@v2
