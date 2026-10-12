@@ -15,7 +15,7 @@ async function setupAIR() {
     const acceptLicense = core.getInput("accept-license", { required: true });
     if (!acceptLicense) {
       throw new Error(
-        "Parameter `accept-license` must be true to accept the Adobe AIR SDK License Agreement. Find it here: https://airsdk.harman.com/assets/pdfs/HARMAN%20AIR%20SDK%20License%20Agreement.pdf"
+        "Parameter `accept-license` must be true to accept the Adobe AIR SDK License Agreement. Find it here: https://airsdk.wxlift.com/assets/pdfs/HARMAN%20AIR%20SDK%20License%20Agreement.pdf"
       );
     }
     const licenseFile = core.getInput("license-base64", { required: false });
@@ -97,7 +97,7 @@ async function setupHarmanAIR(/** @type string */ airVersion) {
     );
   }
 
-  const archiveUrl = `https://airsdk.harman.com${urlPath}?license=accepted`;
+  const archiveUrl = `https://airsdk.wxlift.com${urlPath}?license=accepted`;
   const filename = path.basename(new URL(archiveUrl).pathname);
   const installLocation = getInstallLocation();
   await installSdkFromUrl(archiveUrl, filename, installLocation, airVersion);

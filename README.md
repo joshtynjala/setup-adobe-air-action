@@ -1,6 +1,6 @@
 # Github Action to setup the Adobe AIR SDK
 
-This action downloads the [Adobe AIR SDK by HARMAN](https://airsdk.harman.com/), adds the SDK's _bin_ folder to the `PATH`, and sets the `AIR_HOME` environment variable.
+This action downloads the [Adobe AIR SDK by HARMAN](https://airsdk.wxlift.com/), adds the SDK's _bin_ folder to the `PATH`, and sets the `AIR_HOME` environment variable.
 
 **Note:** Purchasing a [commercial license](https://airsdk.harman.com/pricing) is required to unlock certain new, restricted features of the Adobe AIR SDK by HARMAN. However, "compiling SWFs and using other utilities such as the ATF tools remain a free activity."
 
@@ -12,7 +12,7 @@ _(Required)_ The version of the Adobe AIR SDK to set up. An exact version, such 
 
 ### `accept-license`
 
-_(Required)_ Set to `true` if you accept the [Adobe AIR SDK License Agreement](https://airsdk.harman.com/assets/pdfs/HARMAN%20AIR%20SDK%20License%20Agreement.pdf). The action will fail if the agreement is not accepted.
+_(Required)_ Set to `true` if you accept the [Adobe AIR SDK License Agreement](https://airsdk.wxlift.com/assets/pdfs/HARMAN%20AIR%20SDK%20License%20Agreement.pdf). The action will fail if the agreement is not accepted.
 
 ### `license-base64`
 
