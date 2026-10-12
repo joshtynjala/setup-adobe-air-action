@@ -19,9 +19,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^2.0.3",
-    "@actions/tool-cache": "^3.0.1",
-    "node-fetch": "^2.7.0"
+    "@actions/core": "^3.0.1",
+    "@actions/tool-cache": "^4.0.0",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@types/node": "^24.12.2"

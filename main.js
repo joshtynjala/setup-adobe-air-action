@@ -42,7 +42,7 @@ async function setupWiproAIR(/** @type string */ airVersion) {
   const releasesResponse = await fetch(
     "https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases"
   );
-  const releases = await releasesResponse.json();
+  /** @type any */ const releases = await releasesResponse.json();
 
   let bestMatch = null;
   const requestedParts = airVersion.split(".");
@@ -72,7 +72,7 @@ async function setupWiproAIR(/** @type string */ airVersion) {
   const urlsResponse = await fetch(
     `https://dcdu3ujoji.execute-api.us-east-1.amazonaws.com/production/releases/${airVersion}/urls`
   );
-  const urls = await urlsResponse.json();
+  /** @type any */ const urls = await urlsResponse.json();
 
   var urlField = null;
   if (process.platform.startsWith("darwin")) {

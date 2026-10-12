@@ -200,12 +200,6 @@ declare module "tls" {
          * An optional Buffer instance containing a TLS session.
          */
         session?: Buffer | undefined;
-        /**
-         * If true, specifies that the OCSP status request extension will be
-         * added to the client hello and an 'OCSPResponse' event will be
-         * emitted on the socket before establishing a secure communication
-         */
-        requestOCSP?: boolean | undefined;
     }
     /**
      * Performs transparent encryption of written data and all required TLS
@@ -279,11 +273,19 @@ declare module "tls" {
          */
         getCipher(): CipherNameAndProtocol;
         /**
-         * Returns an object representing the type, name, and size of parameter of
-         * an ephemeral key exchange in `perfect forward secrecy` on a client
-         * connection. It returns an empty object when the key exchange is not
-         * ephemeral. As this is only supported on a client socket; `null` is returned
-         * if called on a server socket. The supported types are `'DH'` and `'ECDH'`. The `name` property is available only when type is `'ECDH'`.
+         * Returns an object describing ephemeral key agreement in [perfect forward
+         * secrecy](https://nodejs.org/docs/latest-v26.x/api/tls.html#perfect-forward-secrecy) on a client connection. It returns an empty object when the key
+         * agreement is not ephemeral. As this is only supported on a client socket;
+         * `null` is returned if called on a server socket. The supported types are `'DH'`,
+         * `'ECDH'`, and `'TLSGroup'`. For `'DH'` and `'ECDH'`, the object describes peer
+         * temporary key parameters. For `'TLSGroup'`, the object identifies the negotiated
+         * TLS Supported Group used for key agreement when a peer temporary key object is
+         * not available.
+         *
+         * The `name` property is available only when type is `'ECDH'` or `'TLSGroup'`. The
+         * `size` property is not available when type is `'TLSGroup'`. For `'TLSGroup'`,
+         * `name` is the negotiated TLS Supported Group name. Standardized TLS group names
+         * and code points are listed in the [IANA TLS Supported Groups registry](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-8).
          *
          * For example: `{ type: 'ECDH', name: 'prime256v1', size: 256 }`.
          * @since v5.0.0
@@ -486,31 +488,37 @@ declare module "tls" {
         exportKeyingMaterial(length: number, label: string, context: Buffer): NonSharedBuffer;
         addListener(event: string, listener: (...args: any[]) => void): this;
         addListener(event: "OCSPResponse", listener: (response: NonSharedBuffer) => void): this;
+        addListener(event: "secure", listener: () => void): this;
         addListener(event: "secureConnect", listener: () => void): this;
         addListener(event: "session", listener: (session: NonSharedBuffer) => void): this;
         addListener(event: "keylog", listener: (line: NonSharedBuffer) => void): this;
         emit(event: string | symbol, ...args: any[]): boolean;
         emit(event: "OCSPResponse", response: NonSharedBuffer): boolean;
+        emit(event: "secure"): boolean;
         emit(event: "secureConnect"): boolean;
         emit(event: "session", session: NonSharedBuffer): boolean;
         emit(event: "keylog", line: NonSharedBuffer): boolean;
         on(event: string, listener: (...args: any[]) => void): this;
         on(event: "OCSPResponse", listener: (response: NonSharedBuffer) => void): this;
+        on(event: "secure", listener: () => void): this;
         on(event: "secureConnect", listener: () => void): this;
         on(event: "session", listener: (session: NonSharedBuffer) => void): this;
         on(event: "keylog", listener: (line: NonSharedBuffer) => void): this;
         once(event: string, listener: (...args: any[]) => void): this;
         once(event: "OCSPResponse", listener: (response: NonSharedBuffer) => void): this;
+        once(event: "secure", listener: () => void): this;
         once(event: "secureConnect", listener: () => void): this;
         once(event: "session", listener: (session: NonSharedBuffer) => void): this;
         once(event: "keylog", listener: (line: NonSharedBuffer) => void): this;
         prependListener(event: string, listener: (...args: any[]) => void): this;
         prependListener(event: "OCSPResponse", listener: (response: NonSharedBuffer) => void): this;
+        prependListener(event: "secure", listener: () => void): this;
         prependListener(event: "secureConnect", listener: () => void): this;
         prependListener(event: "session", listener: (session: NonSharedBuffer) => void): this;
         prependListener(event: "keylog", listener: (line: NonSharedBuffer) => void): this;
         prependOnceListener(event: string, listener: (...args: any[]) => void): this;
         prependOnceListener(event: "OCSPResponse", listener: (response: NonSharedBuffer) => void): this;
+        prependOnceListener(event: "secure", listener: () => void): this;
         prependOnceListener(event: "secureConnect", listener: () => void): this;
         prependOnceListener(event: "session", listener: (session: NonSharedBuffer) => void): this;
         prependOnceListener(event: "keylog", listener: (line: NonSharedBuffer) => void): this;
@@ -554,6 +562,12 @@ declare module "tls" {
          * @default true
          */
         rejectUnauthorized?: boolean | undefined;
+        /**
+         * If true, specifies that the OCSP status request extension will be
+         * added to the client hello and an 'OCSPResponse' event will be
+         * emitted on the socket before establishing a secure communication.
+         */
+        requestOCSP?: boolean | undefined;
     }
     interface TlsOptions extends SecureContextOptions, CommonConnectionOptions, net.ServerOpts {
         /**
@@ -826,6 +840,7 @@ declare module "tls" {
         prependOnceListener(event: "keylog", listener: (line: NonSharedBuffer, tlsSocket: TLSSocket) => void): this;
     }
     type SecureVersion = "TLSv1.3" | "TLSv1.2" | "TLSv1.1" | "TLSv1";
+    type CertificateCompressionAlgorithm = "zlib" | "brotli" | "zstd";
     interface SecureContextOptions {
         /**
          * If set, this will be called when a client opens a connection using the ALPN extension.
@@ -863,6 +878,15 @@ declare module "tls" {
          */
         cert?: string | Buffer | Array<string | Buffer> | undefined;
         /**
+         * An array of supported certificate
+         * compression algorithm names, in preference order. Supported values are
+         * `'zlib'`, `'brotli'`, and `'zstd'`. When set, enables TLS certificate
+         * compression ([RFC 8879](https://tools.ietf.org/html/rfc8879)) which compresses certificates during the TLS
+         * handshake, reducing handshake size. Only effective with TLSv1.3.
+         * **Default:** `[]` (disabled).
+         */
+        certificateCompression?: readonly CertificateCompressionAlgorithm[] | undefined;
+        /**
          *  Colon-separated list of supported signature algorithms. The list
          *  can contain digest algorithms (SHA256, MD5 etc.), public key
          *  algorithms (RSA-PSS, ECDSA etc.), combination of both (e.g
@@ -892,13 +916,16 @@ declare module "tls" {
          */
         dhparam?: string | Buffer | undefined;
         /**
-         * A string describing a named curve or a colon separated list of curve
-         * NIDs or names, for example P-521:P-384:P-256, to use for ECDH key
-         * agreement. Set to auto to select the curve automatically. Use
-         * crypto.getCurves() to obtain a list of available curve names. On
-         * recent releases, openssl ecparam -list_curves will also display the
-         * name and description of each available elliptic curve. Default:
-         * tls.DEFAULT_ECDH_CURVE.
+         * A string describing a named curve, TLS group, or
+         * colon-separated list of named curves or TLS groups to use for key agreement,
+         * for example `P-521:P-384:P-256`, `X25519`, or `X25519MLKEM768`. The
+         * historical name of this option refers to ECDH key agreement in TLSv1.2 and
+         * below. In TLSv1.3, this option configures the TLS Supported Groups and
+         * key share groups offered or accepted by the TLS stack. Set to `auto` to
+         * select the group automatically. Use `crypto.getCurves()` to obtain a
+         * list of available elliptic curve names. For TLS group names, use
+         * `openssl list -tls-groups` or consult the [IANA TLS Supported Groups
+         * registry](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-8).
          */
         ecdhCurve?: string | undefined;
         /**
@@ -1191,6 +1218,20 @@ declare module "tls" {
      */
     function getCiphers(): string[];
     /**
+     * Returns an array with the names of the RFC 8879 certificate compression
+     * algorithms supported by the current OpenSSL build, suitable for use in the
+     * `certificateCompression` option of `tls.createSecureContext()`. Possible
+     * values include `'zlib'`, `'brotli'`, and `'zstd'`.
+     *
+     * The array is empty when certificate compression is unavailable.
+     *
+     * ```js
+     * console.log(tls.getCertificateCompressionAlgorithms()); // ['zlib', 'brotli', 'zstd']
+     * ```
+     * @since v24.19.0
+     */
+    function getCertificateCompressionAlgorithms(): CertificateCompressionAlgorithm[];
+    /**
      * Sets the default CA certificates used by Node.js TLS clients. If the provided
      * certificates are parsed successfully, they will become the default CA
      * certificate list returned by {@link getCACertificates} and used
@@ -1223,9 +1264,9 @@ declare module "tls" {
      */
     function setDefaultCACertificates(certs: ReadonlyArray<string | NodeJS.ArrayBufferView>): void;
     /**
-     * The default curve name to use for ECDH key agreement in a tls server.
-     * The default value is `'auto'`. See `{@link createSecureContext()}` for further
-     * information.
+     * The default named curve or TLS group list to use for key agreement in a TLS
+     * server. The default value is `'auto'`. See `tls.createSecureContext()` for
+     * further information.
      * @since v0.11.13
      */
     let DEFAULT_ECDH_CURVE: string;

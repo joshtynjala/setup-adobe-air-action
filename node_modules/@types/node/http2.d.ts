@@ -31,6 +31,7 @@ declare module "http2" {
         ":method"?: string | undefined;
         ":authority"?: string | undefined;
         ":scheme"?: string | undefined;
+        ":protocol"?: string | undefined;
     }
     // Http2Stream
     export interface StreamState {
@@ -197,12 +198,18 @@ declare module "http2" {
         addListener(event: "end", listener: () => void): this;
         addListener(event: "error", listener: (err: Error) => void): this;
         addListener(event: "finish", listener: () => void): this;
-        addListener(event: "frameError", listener: (frameType: number, errorCode: number) => void): this;
+        addListener(
+            event: "frameError",
+            listener: (frameType: number, errorCode: number, id: number) => void,
+        ): this;
         addListener(event: "pipe", listener: (src: stream.Readable) => void): this;
         addListener(event: "unpipe", listener: (src: stream.Readable) => void): this;
         addListener(event: "streamClosed", listener: (code: number) => void): this;
         addListener(event: "timeout", listener: () => void): this;
-        addListener(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
+        addListener(
+            event: "trailers",
+            listener: (trailers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         addListener(event: "wantTrailers", listener: () => void): this;
         addListener(event: string | symbol, listener: (...args: any[]) => void): this;
         emit(event: "aborted"): boolean;
@@ -212,12 +219,12 @@ declare module "http2" {
         emit(event: "end"): boolean;
         emit(event: "error", err: Error): boolean;
         emit(event: "finish"): boolean;
-        emit(event: "frameError", frameType: number, errorCode: number): boolean;
+        emit(event: "frameError", frameType: number, errorCode: number, id: number): boolean;
         emit(event: "pipe", src: stream.Readable): boolean;
         emit(event: "unpipe", src: stream.Readable): boolean;
         emit(event: "streamClosed", code: number): boolean;
         emit(event: "timeout"): boolean;
-        emit(event: "trailers", trailers: IncomingHttpHeaders, flags: number): boolean;
+        emit(event: "trailers", trailers: IncomingHttpHeaders, flags: number, rawHeaders: string[]): boolean;
         emit(event: "wantTrailers"): boolean;
         emit(event: string | symbol, ...args: any[]): boolean;
         on(event: "aborted", listener: () => void): this;
@@ -227,12 +234,15 @@ declare module "http2" {
         on(event: "end", listener: () => void): this;
         on(event: "error", listener: (err: Error) => void): this;
         on(event: "finish", listener: () => void): this;
-        on(event: "frameError", listener: (frameType: number, errorCode: number) => void): this;
+        on(event: "frameError", listener: (frameType: number, errorCode: number, id: number) => void): this;
         on(event: "pipe", listener: (src: stream.Readable) => void): this;
         on(event: "unpipe", listener: (src: stream.Readable) => void): this;
         on(event: "streamClosed", listener: (code: number) => void): this;
         on(event: "timeout", listener: () => void): this;
-        on(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
+        on(
+            event: "trailers",
+            listener: (trailers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         on(event: "wantTrailers", listener: () => void): this;
         on(event: string | symbol, listener: (...args: any[]) => void): this;
         once(event: "aborted", listener: () => void): this;
@@ -242,12 +252,15 @@ declare module "http2" {
         once(event: "end", listener: () => void): this;
         once(event: "error", listener: (err: Error) => void): this;
         once(event: "finish", listener: () => void): this;
-        once(event: "frameError", listener: (frameType: number, errorCode: number) => void): this;
+        once(event: "frameError", listener: (frameType: number, errorCode: number, id: number) => void): this;
         once(event: "pipe", listener: (src: stream.Readable) => void): this;
         once(event: "unpipe", listener: (src: stream.Readable) => void): this;
         once(event: "streamClosed", listener: (code: number) => void): this;
         once(event: "timeout", listener: () => void): this;
-        once(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
+        once(
+            event: "trailers",
+            listener: (trailers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         once(event: "wantTrailers", listener: () => void): this;
         once(event: string | symbol, listener: (...args: any[]) => void): this;
         prependListener(event: "aborted", listener: () => void): this;
@@ -257,12 +270,18 @@ declare module "http2" {
         prependListener(event: "end", listener: () => void): this;
         prependListener(event: "error", listener: (err: Error) => void): this;
         prependListener(event: "finish", listener: () => void): this;
-        prependListener(event: "frameError", listener: (frameType: number, errorCode: number) => void): this;
+        prependListener(
+            event: "frameError",
+            listener: (frameType: number, errorCode: number, id: number) => void,
+        ): this;
         prependListener(event: "pipe", listener: (src: stream.Readable) => void): this;
         prependListener(event: "unpipe", listener: (src: stream.Readable) => void): this;
         prependListener(event: "streamClosed", listener: (code: number) => void): this;
         prependListener(event: "timeout", listener: () => void): this;
-        prependListener(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
+        prependListener(
+            event: "trailers",
+            listener: (trailers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         prependListener(event: "wantTrailers", listener: () => void): this;
         prependListener(event: string | symbol, listener: (...args: any[]) => void): this;
         prependOnceListener(event: "aborted", listener: () => void): this;
@@ -272,12 +291,18 @@ declare module "http2" {
         prependOnceListener(event: "end", listener: () => void): this;
         prependOnceListener(event: "error", listener: (err: Error) => void): this;
         prependOnceListener(event: "finish", listener: () => void): this;
-        prependOnceListener(event: "frameError", listener: (frameType: number, errorCode: number) => void): this;
+        prependOnceListener(
+            event: "frameError",
+            listener: (frameType: number, errorCode: number, id: number) => void,
+        ): this;
         prependOnceListener(event: "pipe", listener: (src: stream.Readable) => void): this;
         prependOnceListener(event: "unpipe", listener: (src: stream.Readable) => void): this;
         prependOnceListener(event: "streamClosed", listener: (code: number) => void): this;
         prependOnceListener(event: "timeout", listener: () => void): this;
-        prependOnceListener(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
+        prependOnceListener(
+            event: "trailers",
+            listener: (trailers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         prependOnceListener(event: "wantTrailers", listener: () => void): this;
         prependOnceListener(event: string | symbol, listener: (...args: any[]) => void): this;
     }
@@ -291,7 +316,10 @@ declare module "http2" {
                 rawHeaders: string[],
             ) => void,
         ): this;
-        addListener(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
+        addListener(
+            event: "push",
+            listener: (headers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         addListener(
             event: "response",
             listener: (
@@ -308,7 +336,7 @@ declare module "http2" {
             flags: number,
             rawHeaders: string[],
         ): boolean;
-        emit(event: "push", headers: IncomingHttpHeaders, flags: number): boolean;
+        emit(event: "push", headers: IncomingHttpHeaders, flags: number, rawHeaders: string[]): boolean;
         emit(
             event: "response",
             headers: IncomingHttpHeaders & IncomingHttpStatusHeader,
@@ -325,7 +353,7 @@ declare module "http2" {
                 rawHeaders: string[],
             ) => void,
         ): this;
-        on(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
+        on(event: "push", listener: (headers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void): this;
         on(
             event: "response",
             listener: (
@@ -344,7 +372,10 @@ declare module "http2" {
                 rawHeaders: string[],
             ) => void,
         ): this;
-        once(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
+        once(
+            event: "push",
+            listener: (headers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         once(
             event: "response",
             listener: (
@@ -363,7 +394,10 @@ declare module "http2" {
                 rawHeaders: string[],
             ) => void,
         ): this;
-        prependListener(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
+        prependListener(
+            event: "push",
+            listener: (headers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         prependListener(
             event: "response",
             listener: (
@@ -382,7 +416,10 @@ declare module "http2" {
                 rawHeaders: string[],
             ) => void,
         ): this;
-        prependOnceListener(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
+        prependOnceListener(
+            event: "push",
+            listener: (headers: IncomingHttpHeaders, flags: number, rawHeaders: string[]) => void,
+        ): this;
         prependOnceListener(
             event: "response",
             listener: (
@@ -521,7 +558,7 @@ declare module "http2" {
          *
          * When the `options.waitForTrailers` option is set, the `'wantTrailers'` event
          * will be emitted immediately after queuing the last chunk of payload data to be
-         * sent. The `http2stream.sendTrailers()` method can then be used to sent trailing
+         * sent. The `http2stream.sendTrailers()` method can then be used to send trailing
          * header fields to the peer.
          *
          * When `options.waitForTrailers` is set, the `Http2Stream` will not automatically
@@ -636,7 +673,7 @@ declare module "http2" {
          *
          * When the `options.waitForTrailers` option is set, the `'wantTrailers'` event
          * will be emitted immediately after queuing the last chunk of payload data to be
-         * sent. The `http2stream.sendTrailers()` method can then be used to sent trailing
+         * sent. The `http2stream.sendTrailers()` method can then be used to send trailing
          * header fields to the peer.
          *
          * When `options.waitForTrailers` is set, the `Http2Stream` will not automatically
@@ -671,6 +708,7 @@ declare module "http2" {
         maxConcurrentStreams?: number | undefined;
         maxHeaderListSize?: number | undefined;
         enableConnectProtocol?: boolean | undefined;
+        customSettings?: { [key: number]: number };
     }
     export interface ClientSessionRequestOptions {
         endStream?: boolean | undefined;
@@ -896,7 +934,7 @@ declare module "http2" {
         addListener(event: "error", listener: (err: Error) => void): this;
         addListener(
             event: "frameError",
-            listener: (frameType: number, errorCode: number, streamID: number) => void,
+            listener: (frameType: number, errorCode: number, id: number) => void,
         ): this;
         addListener(
             event: "goaway",
@@ -909,7 +947,7 @@ declare module "http2" {
         addListener(event: string | symbol, listener: (...args: any[]) => void): this;
         emit(event: "close"): boolean;
         emit(event: "error", err: Error): boolean;
-        emit(event: "frameError", frameType: number, errorCode: number, streamID: number): boolean;
+        emit(event: "frameError", frameType: number, errorCode: number, id: number): boolean;
         emit(event: "goaway", errorCode: number, lastStreamID: number, opaqueData?: NonSharedBuffer): boolean;
         emit(event: "localSettings", settings: Settings): boolean;
         emit(event: "ping"): boolean;
@@ -918,7 +956,7 @@ declare module "http2" {
         emit(event: string | symbol, ...args: any[]): boolean;
         on(event: "close", listener: () => void): this;
         on(event: "error", listener: (err: Error) => void): this;
-        on(event: "frameError", listener: (frameType: number, errorCode: number, streamID: number) => void): this;
+        on(event: "frameError", listener: (frameType: number, errorCode: number, id: number) => void): this;
         on(
             event: "goaway",
             listener: (errorCode: number, lastStreamID: number, opaqueData?: NonSharedBuffer) => void,
@@ -930,7 +968,7 @@ declare module "http2" {
         on(event: string | symbol, listener: (...args: any[]) => void): this;
         once(event: "close", listener: () => void): this;
         once(event: "error", listener: (err: Error) => void): this;
-        once(event: "frameError", listener: (frameType: number, errorCode: number, streamID: number) => void): this;
+        once(event: "frameError", listener: (frameType: number, errorCode: number, id: number) => void): this;
         once(
             event: "goaway",
             listener: (errorCode: number, lastStreamID: number, opaqueData?: NonSharedBuffer) => void,
@@ -944,7 +982,7 @@ declare module "http2" {
         prependListener(event: "error", listener: (err: Error) => void): this;
         prependListener(
             event: "frameError",
-            listener: (frameType: number, errorCode: number, streamID: number) => void,
+            listener: (frameType: number, errorCode: number, id: number) => void,
         ): this;
         prependListener(
             event: "goaway",
@@ -959,7 +997,7 @@ declare module "http2" {
         prependOnceListener(event: "error", listener: (err: Error) => void): this;
         prependOnceListener(
             event: "frameError",
-            listener: (frameType: number, errorCode: number, streamID: number) => void,
+            listener: (frameType: number, errorCode: number, id: number) => void,
         ): this;
         prependOnceListener(
             event: "goaway",
@@ -977,9 +1015,12 @@ declare module "http2" {
          * HTTP/2 request to the connected server.
          *
          * When a `ClientHttp2Session` is first created, the socket may not yet be
-         * connected. if `clienthttp2session.request()` is called during this time, the
+         * connected. If `clienthttp2session.request()` is called during this time, the
          * actual request will be deferred until the socket is ready to go.
-         * If the `session` is closed before the actual request be executed, an `ERR_HTTP2_GOAWAY_SESSION` is thrown.
+         *
+         * If the session becomes unavailable before the request can be created, the
+         * returned stream will emit `ERR_HTTP2_GOAWAY_SESSION` or
+         * `ERR_HTTP2_INVALID_SESSION` asynchronously.
          *
          * This method is only available if `http2session.type` is equal to `http2.constants.NGHTTP2_SESSION_CLIENT`.
          *
@@ -1345,6 +1386,11 @@ declare module "http2" {
          */
         maxHeaderListPairs?: number | undefined;
         /**
+         * Sets the maximum number of uniq origin the sever
+         * can send via ORIGIN frames. **Default:** `128`.
+         */
+        maxOriginSetSize?: number | undefined;
+        /**
          * Sets the maximum number of outstanding, unacknowledged pings.
          * @default 10
          */
@@ -1420,12 +1466,18 @@ declare module "http2" {
         Http2Request extends typeof Http2ServerRequest = typeof Http2ServerRequest,
         Http2Response extends typeof Http2ServerResponse<InstanceType<Http2Request>> = typeof Http2ServerResponse,
     > extends SessionOptions {
+        maxSessionRejectedStreams?: number | undefined;
+        maxSessionInvalidFrames?: number | undefined;
         streamResetBurst?: number | undefined;
         streamResetRate?: number | undefined;
+        /** @deprecated Use `http1Options.IncomingMessage` instead. */
         Http1IncomingMessage?: Http1Request | undefined;
+        /** @deprecated Use `http1Options.ServerResponse` instead. */
         Http1ServerResponse?: Http1Response | undefined;
+        http1Options?: Http1Options<Http1Request, Http1Response> | undefined;
         Http2ServerRequest?: Http2Request | undefined;
         Http2ServerResponse?: Http2Response | undefined;
+        strictSingleValueFields?: boolean | undefined;
     }
     export interface SecureClientSessionOptions extends ClientSessionOptions, tls.ConnectionOptions {}
     export interface SecureServerSessionOptions<
@@ -1448,6 +1500,14 @@ declare module "http2" {
     > extends SecureServerSessionOptions<Http1Request, Http1Response, Http2Request, Http2Response> {
         allowHTTP1?: boolean | undefined;
         origins?: string[] | undefined;
+    }
+    interface Http1Options<
+        Request extends typeof IncomingMessage,
+        Response extends typeof ServerResponse<InstanceType<Request>>,
+    > {
+        IncomingMessage?: Request | undefined;
+        ServerResponse?: Response | undefined;
+        keepAliveTimeout?: number | undefined;
     }
     interface HTTP2ServerCommon {
         setTimeout(msec?: number, callback?: () => void): this;
@@ -1475,7 +1535,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        addListener(event: "sessionError", listener: (err: Error) => void): this;
+        addListener(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         addListener(
             event: "stream",
             listener: (
@@ -1497,7 +1563,11 @@ declare module "http2" {
             event: "session",
             session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
         ): boolean;
-        emit(event: "sessionError", err: Error): boolean;
+        emit(
+            event: "sessionError",
+            err: Error,
+            session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+        ): boolean;
         emit(
             event: "stream",
             stream: ServerHttp2Stream,
@@ -1519,7 +1589,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        on(event: "sessionError", listener: (err: Error) => void): this;
+        on(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         on(
             event: "stream",
             listener: (
@@ -1543,7 +1619,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        once(event: "sessionError", listener: (err: Error) => void): this;
+        once(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         once(
             event: "stream",
             listener: (
@@ -1567,7 +1649,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        prependListener(event: "sessionError", listener: (err: Error) => void): this;
+        prependListener(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         prependListener(
             event: "stream",
             listener: (
@@ -1591,7 +1679,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        prependOnceListener(event: "sessionError", listener: (err: Error) => void): this;
+        prependOnceListener(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         prependOnceListener(
             event: "stream",
             listener: (
@@ -1622,7 +1716,11 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        addListener(event: "sessionError", listener: (err: Error) => void): this;
+        addListener(
+            event: "sessionError",
+            listener: (err: Error) => void,
+            session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+        ): this;
         addListener(
             event: "stream",
             listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void,
@@ -1640,7 +1738,11 @@ declare module "http2" {
             event: "session",
             session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
         ): boolean;
-        emit(event: "sessionError", err: Error): boolean;
+        emit(
+            event: "sessionError",
+            err: Error,
+            session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+        ): boolean;
         emit(event: "stream", stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number): boolean;
         emit(event: "timeout"): boolean;
         emit(event: "unknownProtocol", socket: tls.TLSSocket): boolean;
@@ -1657,7 +1759,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        on(event: "sessionError", listener: (err: Error) => void): this;
+        on(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         on(
             event: "stream",
             listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void,
@@ -1677,7 +1785,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        once(event: "sessionError", listener: (err: Error) => void): this;
+        once(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         once(
             event: "stream",
             listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void,
@@ -1697,7 +1811,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        prependListener(event: "sessionError", listener: (err: Error) => void): this;
+        prependListener(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         prependListener(
             event: "stream",
             listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void,
@@ -1717,7 +1837,13 @@ declare module "http2" {
             event: "session",
             listener: (session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>) => void,
         ): this;
-        prependOnceListener(event: "sessionError", listener: (err: Error) => void): this;
+        prependOnceListener(
+            event: "sessionError",
+            listener: (
+                err: Error,
+                session: ServerHttp2Session<Http1Request, Http1Response, Http2Request, Http2Response>,
+            ) => void,
+        ): this;
         prependOnceListener(
             event: "stream",
             listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void,
@@ -1885,8 +2011,8 @@ declare module "http2" {
          *
          * Then `request.url` will be:
          *
-         * ```js
-         * '/status?name=ryan'
+         * ```json
+         * "/status?name=ryan"
          * ```
          *
          * To parse the url into its parts, `new URL()` can be used:
